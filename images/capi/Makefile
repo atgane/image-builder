@@ -370,6 +370,7 @@ NODE_OVA_VSPHERE_CLONE_BUILD_NAMES		:=	$(addprefix node-ova-vsphere-clone-,$(PLA
 AMI_BUILD_NAMES			   ?= ami-ubuntu-2204 ami-ubuntu-2404 ami-amazon-2 ami-amazon-2023 ami-flatcar ami-flatcar-arm64 ami-windows-2019 ami-rockylinux-8 ami-rhel-8
 HUAWEICLOUD_BUILD_NAMES ?= huaweicloud-ubuntu-2204
 GCE_BUILD_NAMES			   ?= gce-ubuntu-2204 gce-ubuntu-2404 gce-rhel-8
+NCLOUD_BUILD_NAMES         ?= ncloud-ubuntu-2404
 
 # Make needs these lists to be space delimited, no quotes
 VHD_TARGETS := $(shell grep VHD_TARGETS azure_targets.sh | sed 's/VHD_TARGETS=//' | tr -d \")
@@ -423,6 +424,8 @@ AMI_BUILD_TARGETS	:= $(addprefix build-,$(AMI_BUILD_NAMES))
 AMI_VALIDATE_TARGETS	:= $(addprefix validate-,$(AMI_BUILD_NAMES))
 GCE_BUILD_TARGETS	:= $(addprefix build-,$(GCE_BUILD_NAMES))
 GCE_VALIDATE_TARGETS	:= $(addprefix validate-,$(GCE_BUILD_NAMES))
+NCLOUD_BUILD_TARGETS := $(addprefix build-,$(NCLOUD_BUILD_NAMES))
+NCLOUD_VALIDATE_TARGETS := $(addprefix validate-,$(NCLOUD_BUILD_NAMES))
 AZURE_BUILD_VHD_TARGETS	:= $(addprefix build-,$(AZURE_BUILD_VHD_NAMES))
 AZURE_VALIDATE_VHD_TARGETS	:= $(addprefix validate-,$(AZURE_BUILD_VHD_NAMES))
 AZURE_BUILD_SIG_TARGETS	:= $(addprefix build-,$(AZURE_BUILD_SIG_NAMES))
@@ -511,6 +514,14 @@ $(GCE_BUILD_TARGETS): deps-gce
 .PHONY: $(GCE_VALIDATE_TARGETS)
 $(GCE_VALIDATE_TARGETS): deps-gce
 	$(PACKER) validate $(PACKER_NODE_FLAGS) -var-file="$(abspath packer/gce/$(subst validate-gce-,,$@).json)" $(ABSOLUTE_PACKER_VAR_FILES) packer/gce/packer.json
+
+.PHONY: $(NCLOUD_BUILD_TARGETS)
+$(NCLOUD_BUILD_TARGETS):
+	$(PACKER) build -debug $(PACKER_NODE_FLAGS) -var-file="$(abspath packer/ncloud/$(subst build-ncloud-,,$@).json)" $(ABSOLUTE_PACKER_VAR_FILES) packer/ncloud/packer.json
+
+.PHONY: $(NCLOUD_VALIDATE_TARGETS)
+$(NCLOUD_VALIDATE_TARGETS):
+	$(PACKER) validate $(PACKER_NODE_FLAGS) -var-file="$(abspath packer/ncloud/$(subst validate-ncloud-,,$@).json)" $(ABSOLUTE_PACKER_VAR_FILES) packer/ncloud/packer.json
 
 .PHONY: $(AZURE_BUILD_VHD_TARGETS)
 $(AZURE_BUILD_VHD_TARGETS): deps-azure
