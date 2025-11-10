@@ -27,7 +27,7 @@
 - ansible.builtin.include_tasks: googlecompute.yml
   when: packer_builder_type.startswith('googlecompute')
 
-- ansible.builtin.include.tasks: ncloud.yml
+- ansible.builtin.include_tasks: ncloud.yml
   when: packer_builder_type.startswith('ncloud')
 
 - ansible.builtin.include_tasks: openstack.yml
