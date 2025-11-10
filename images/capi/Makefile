@@ -517,7 +517,7 @@ $(GCE_VALIDATE_TARGETS): deps-gce
 
 .PHONY: $(NCLOUD_BUILD_TARGETS)
 $(NCLOUD_BUILD_TARGETS):
-	$(PACKER) build -debug $(PACKER_NODE_FLAGS) -var-file="$(abspath packer/ncloud/$(subst build-ncloud-,,$@).json)" $(ABSOLUTE_PACKER_VAR_FILES) packer/ncloud/packer.json
+	$(PACKER) build $(PACKER_NODE_FLAGS) -var-file="$(abspath packer/ncloud/$(subst build-ncloud-,,$@).json)" $(ABSOLUTE_PACKER_VAR_FILES) packer/ncloud/packer.json
 
 .PHONY: $(NCLOUD_VALIDATE_TARGETS)
 $(NCLOUD_VALIDATE_TARGETS):

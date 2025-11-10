@@ -59,8 +59,6 @@
     - { param: net.bridge.bridge-nf-call-iptables, val: 1 }
     - { param: net.bridge.bridge-nf-call-ip6tables, val: 1 }
     - { param: net.ipv4.ip_forward, val: 1 }
-    - { param: net.ipv6.conf.all.forwarding, val: 1 }
-    - { param: net.ipv6.conf.all.disable_ipv6, val: 0 }
     - { param: net.ipv4.tcp_congestion_control, val: bbr }
     - { param: vm.overcommit_memory, val: 1 }
     - { param: kernel.panic, val: 10 }

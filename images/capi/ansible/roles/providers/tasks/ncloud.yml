@@ -1,0 +1,6 @@
+---
+- name: Test Ncloud
+  file:
+    path: ~/ncloud
+    state: directory
+    mode: '0755'
