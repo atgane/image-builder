@@ -1,6 +1,10 @@
 ---
-- name: Test Ncloud
-  file:
-    path: ~/ncloud
-    state: directory
-    mode: '0755'
+- name: Install cloud-init packages
+  ansible.builtin.apt:
+    name: "{{ packages }}"
+    state: present
+    force_apt_get: true
+  vars:
+    packages:
+      - cloud-init
+  when: ansible_os_family == "Debian"
