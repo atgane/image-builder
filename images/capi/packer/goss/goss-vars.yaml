@@ -469,6 +469,9 @@ ubuntu:
         stdout: ["gcloud"]
         stderr: []
         timeout: 0
+  ncloud:
+    package:
+    command:
   oci:
     service:
     package:
