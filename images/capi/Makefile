@@ -58,7 +58,7 @@ GET_UBUNTU_DOTTED_SEMVER=$(strip \
 
 .PHONY: deps
 deps: ## Installs/checks all dependencies
-deps: deps-ami deps-azure deps-do deps-gce deps-ova deps-openstack deps-qemu deps-raw deps-oci deps-osc deps-powervs deps-nutanix deps-hcloud
+deps: deps-ami deps-azure deps-do deps-gce deps-ncloud deps-ova deps-openstack deps-qemu deps-raw deps-oci deps-osc deps-powervs deps-nutanix deps-hcloud
 
 .PHONY: deps-common
 deps-common: ## Installs/checks dependencies common to most builds
@@ -99,6 +99,9 @@ deps-gce: ## Installs/checks dependencies for GCE builds
 deps-gce: deps-common
 	$(PACKER) init packer/config.pkr.hcl
 	$(PACKER) init packer/gce/config.pkr.hcl
+
+deps-ncloud:
+	$(PACKER) init packer/config.pkr.hcl
 
 .PHONY: deps-ova
 deps-ova: ## Installs/checks dependencies for OVA builds
@@ -751,6 +754,9 @@ build-gce-ubuntu-2404: ## Builds the GCE ubuntu-2404 image
 build-gce-rhel-8: ## Builds the GCE rhel-8 image
 build-gce-all: $(GCE_BUILD_TARGETS) ## Builds all GCE image
 
+build-ncloud-ubuntu-2404:
+build-ncloud-all: $(NCLOUD_BUILD_TARGETS)
+
 build-huaweicloud-ubuntu-2204: ## Builds Ubuntu 22.04 HuaweiCloud image
 build-huaweicloud-all: $(HUAWEICLOUD_BUILD_TARGETS) ## Builds all HuaweiCloud images
 
@@ -949,6 +955,9 @@ validate-gce-ubuntu-2404: ## Validates Ubuntu 24.04 GCE Snapshot Packer config
 validate-gce-rhel-8: ## Validates RHEL 8 GCE Snapshot Packer config
 validate-gce-all: $(GCE_VALIDATE_TARGETS) ## Validates all GCE Snapshot Packer config
 
+validate-ncloud-ubuntu-2404:
+validate-ncloud-all: $(NCLOUD_VALIDATE_TARGETS)
+
 validate-node-ova-local-flatcar: ## Validates Flatcar stable Node OVA Packer config w local hypervisor
 validate-node-ova-local-photon-4: ## Validates Photon 4 Node OVA Packer config w local hypervisor
 validate-node-ova-local-photon-5: ## Validates Photon 5 Node OVA Packer config w local hypervisor
@@ -1050,6 +1059,7 @@ validate-all: validate-ami-all \
 	validate-azure-all \
 	validate-do-all \
 	validate-gce-all \
+	validate-ncloud-all \
 	validate-node-ova-local-all \
 	validate-qemu-all \
 	validate-raw-all \
